@@ -96,3 +96,7 @@ Lokaler Typecheck: `cd app && npm install && npm run typecheck`.
 `admin.fetchOffsets` aufgerufen wird, während der Group Coordinator eines frisch
 gestarteten Clusters noch lädt. Das Gateway startet das Lag-Polling deshalb erst, wenn
 sein eigener Consumer Partitionen zugewiesen bekommen hat.
+
+## Lizenz
+
+[MIT](LICENSE) – frei nutzbar, auch für Lehre und eigene Weiterentwicklungen.
