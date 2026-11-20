@@ -1,0 +1,14 @@
+# Abhängigkeiten & Build-Ausgaben
+node_modules/
+target/
+
+# IDE- und Betriebssystem-Dateien
+.idea/
+*.iml
+.vscode/
+.DS_Store
+
+# Lokale Tool-Daten und Logs
+.remember/
+*.log
+.env

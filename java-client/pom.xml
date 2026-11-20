@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>demo</groupId>
+    <artifactId>kafka-java-client</artifactId>
+    <version>1.0</version>
+
+    <properties>
+        <maven.compiler.release>21</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <customer>anna</customer>
+    </properties>
+
+    <dependencies>
+        <!-- Der offizielle Kafka-Client: mehr braucht es nicht. -->
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-clients</artifactId>
+            <version>4.3.1</version>
+        </dependency>
+        <!-- Logging-Ausgabe des Clients (auf WARN gedrosselt, siehe simplelogger.properties). -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.36</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.15.0</version>
+            </plugin>
+            <!-- ./mvnw -q compile exec:exec@producer [-Dcustomer=ben]   bzw.   ./mvnw -q compile exec:exec@consumer -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.7.0</version>
+                <configuration>
+                    <executable>java</executable>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>producer</id>
+                        <configuration>
+                            <arguments>
+                                <argument>-cp</argument>
+                                <classpath/>
+                                <argument>demo.OrderProducer</argument>
+                                <argument>${customer}</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>consumer</id>
+                        <configuration>
+                            <arguments>
+                                <argument>-cp</argument>
+                                <classpath/>
+                                <argument>demo.OrderConsumer</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

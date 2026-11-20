@@ -1,0 +1,22 @@
+{
+  "name": "kafka-shop-demo",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Onlineshop-Demo für Apache Kafka: Gateway, Consumer-Services und Live-Dashboard",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@confluentinc/kafka-javascript": "1.11.0",
+    "ws": "8.22.0"
+  },
+  "devDependencies": {
+    "@types/node": "24.19.2",
+    "@types/ws": "8.18.2",
+    "typescript": "5.9.3"
+  }
+}

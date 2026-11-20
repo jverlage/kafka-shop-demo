@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kafka Shop Demo</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%235b54d6'/><path d='M9 11h14M9 16h14M9 21h14' stroke='white' stroke-width='3' stroke-linecap='round'/></svg>">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-stage="1">
+  <header class="topbar">
+    <h1>Kafka Shop Demo</h1>
+    <nav class="stages" aria-label="Stufe">
+      <button data-stage="1"><kbd>1</kbd> Fan-out</button>
+      <button data-stage="2"><kbd>2</kbd> Partitionen</button>
+      <button data-stage="3"><kbd>3</kbd> Consumer Groups</button>
+      <button data-stage="4"><kbd>4</kbd> Event-Kette</button>
+    </nav>
+    <div class="topbar-right">
+      <span class="conn" id="conn"><span class="dot"></span><span class="conn-label">verbinde …</span></span>
+      <button class="icon-btn" id="theme-toggle" title="Hell/Dunkel" aria-label="Hell/Dunkel umschalten">◐</button>
+    </div>
+  </header>
+
+  <p class="caption" id="caption"></p>
+
+  <main class="stage" id="stage">
+    <svg class="flows" id="flows" aria-hidden="true">
+      <defs>
+        <marker id="head-produce" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="head produce"/></marker>
+        <marker id="head-consume" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="head consume"/></marker>
+        <marker id="head-off" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="head off"/></marker>
+      </defs>
+    </svg>
+
+    <section class="col col-shop">
+      <div class="box shop" id="shop">
+        <div class="box-title"><span class="box-icon">🛒</span> Shop</div>
+        <div class="customers" id="customers" data-min-stage="2"></div>
+        <div class="products" id="products"></div>
+      </div>
+    </section>
+
+    <section class="col col-kafka">
+      <div class="box kafka" id="kafka">
+        <div class="kafka-title">
+          <span class="kafka-mark" aria-hidden="true"></span>
+          <div>
+            <div class="kafka-name">Apache Kafka</div>
+            <div class="kafka-sub">Broker – speichert jedes Event</div>
+          </div>
+        </div>
+        <div class="topics">
+          <div class="topic" data-topic="orders"><div class="topic-name">orders</div><div class="lanes"></div></div>
+          <div class="topic" data-topic="payments" data-min-stage="4"><div class="topic-name">payments</div><div class="lanes"></div></div>
+          <div class="topic" data-topic="shipments" data-min-stage="4"><div class="topic-name">shipments</div><div class="lanes"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="col col-consumers" id="consumers"></section>
+  </main>
+
+  <footer class="controls">
+    <label class="switch">
+      <input type="checkbox" id="sim-toggle">
+      <span class="slider"></span>
+      <span>Auto-Bestellungen</span>
+    </label>
+    <label class="range">
+      <input type="range" id="sim-rate" min="1" max="20" step="1" value="2" aria-label="Bestellungen pro Sekunde">
+      <output id="sim-rate-label">2/s</output>
+    </label>
+    <button class="ctl-btn" id="burst">+20 Bestellungen</button>
+    <span class="sep"></span>
+    <label class="range">
+      <span>Tempo</span>
+      <input type="range" id="tempo" min="400" max="3000" step="100" value="1600" aria-label="Dauer pro Pfeil">
+      <output id="tempo-label">1,6 s</output>
+    </label>
+    <span class="sep"></span>
+    <button class="ctl-btn" id="reset">↺ Reset</button>
+    <span class="grow"></span>
+    <span class="legend"><span class="lg produce"></span>produce <span class="lg consume"></span>consume</span>
+    <span class="hint"><kbd>B</kbd> bestellen · <kbd>S</kbd> Simulator · <kbd>X</kbd> +20 · <a href="http://localhost:8080" target="_blank" rel="noopener">Kafka UI</a></span>
+  </footer>
+
+  <div class="overlay" id="overlay" hidden><div class="overlay-box">↺ Reset läuft …</div></div>
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
